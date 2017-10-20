@@ -1,0 +1,41 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+
+<ul>
+  <li>Item:
+     <ol>
+       <li>Point:
+         <div>
+           <ul>
+             <li>elem1</li>
+           </ul>
+         </div>
+       </li>
+     </ol>
+  </li>
+  <li>elem2</li>
+</ul>
+<ul>
+  <li>simple list1</li>
+</ul>
+<ul>
+</ul>
+
+<script type="text/javascript">
+
+function finddepth() {
+maxdepth = 0
+$('li').each(function(li) {
+ 	var parentArray = [];
+   var sParents = $(this).parents("ul, ol").map(function() {                
+      parentArray.push(this.tagName);
+    })
+    var depth = parentArray.length;
+    if (depth > maxdepth) { maxdepth = depth };
+});
+
+alert(maxdepth)
+}
+
+finddepth();
+
+</script>
