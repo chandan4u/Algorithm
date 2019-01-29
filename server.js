@@ -792,3 +792,312 @@ console.log("Server Start on given port:8080");
 // ####################################################################################################################
 // ########################################### Interview Algorithm ####################################################
 // #################################################################################################################### 
+
+
+// Stack Implementation through push and pop - (Last In First Out)
+// let stack = []
+// stack.push(5)
+// stack.push(2)
+// console.log(stack)
+// let popData = stack.pop()
+// console.log(popData)
+// console.log(stack)
+
+// --------------------Queue - (First In First Out)---------------------
+
+//  let queue = []
+//  queue.push(7)
+//  queue.push(9)
+//  console.log(queue)
+//  let queueItem = queue.shift() // take first item from array.
+//  console.log(queueItem)
+//  console.log(queue)
+
+//  queue.unshift(3)  // insert first element in array. 
+//  console.log(queue)
+//  queue.unshift(8)
+//  console.log(queue)
+
+console.log("------------------------ Stack (Last In Fisrt Out) --------------------------------")
+
+class Node {
+    constructor(item) {
+        this.data = item
+        this.next = null
+    }
+}
+
+class Stack {
+    constructor() {
+        this.top = null
+    }
+
+    push(item) {
+        let node = new Node(item)
+        if (this.top) {
+            node.next = this.top
+            this.top = node
+        } else {
+            this.top = node
+        }
+        console.log(JSON.stringify(this.top))
+    }
+
+    pop() {
+        if (this.top) {
+            let itemToTop = this.top
+            this.top = this.top.next
+            console.log(JSON.stringify(this.top))
+            return itemToTop.data
+        } else {
+            console.log("Empty Stack")
+            return false
+        }
+    }
+
+    peek() {
+        if (this.top) {
+            return this.top.data
+        } else {
+            return null
+        }
+    }
+
+    reverse() {
+        let current = this.top
+        let prev = null
+        while (current) {
+            let next = current.next
+            current.next = prev
+            prev = current
+            current = next
+        }
+        return this.top = prev
+    }
+
+    lenght() {
+        let current = this.top
+        let count = 0
+        while (current) {
+            current = current.next
+            count++
+        }
+        return count
+    }
+
+    search(item) {
+        let current = this.top
+        while (current) {
+            if (current.data === item) {
+                return true
+            }
+            current = current.next
+        }
+        return false
+    }
+}
+
+const st = new Stack()
+st.push(5)
+st.push(7)
+st.push(9)
+st.push(3)
+console.log(st.lenght())
+console.log(st.pop())
+console.log(st.peek())
+console.log(">>>>>>", st.reverse())
+console.log(st.lenght())
+console.log(st.search(7))
+
+console.log("------------------------------- Queue (First In First Out) ---------------------------------")
+
+class Queue {
+    constructor () {
+        this.head = null
+    }
+
+    enqueue (item) {
+        let node = new Node(item)
+        if(!this.head) {
+            this.head = node
+        } else {
+           let current = this.head
+           while(current.next) {
+                current = current.next
+           }
+           current.next = node
+        }
+        console.log(JSON.stringify(this))
+    }
+
+    dequeue () {
+        if(!this.head) {
+            console.log("Empty")
+        } else {
+            let itemToPop = this.head.data
+            this.head = this.head.next
+            return itemToPop
+        }
+    }
+
+    length () {
+        if(!this.head) {
+            console.log("Empty")
+        } else {
+            let current, count
+            [current, count] = [this.head, 0]
+            while(current) {
+                ++count
+                current = current.next
+            }
+            return count
+        }
+    }
+
+    peek () {
+        if(this.head) {
+            return this.head.data
+        } else {
+            return "Empty"
+        }
+    }
+}
+
+const qs = new Queue()
+qs.enqueue(12)
+qs.enqueue(23)
+qs.enqueue(90)
+console.log(qs.length())
+console.log(qs.dequeue())
+console.log(qs.length())
+qs.enqueue(40)
+console.log(qs.peek())
+
+console.log("------------------------------- Linked List ---------------------------------")
+
+class LinkedList {
+    constructor () {
+        this.head = null
+    }
+
+    append (item) {
+        let node = new Node(item)
+        if(this.head) {
+            let current = this.head
+            while(current.next) {
+                current = current.next
+            }
+            current.next = node
+        } else {
+            this.head = node
+        }
+        console.log(JSON.stringify(this))
+    }
+
+    appendAt (item, n) {
+        let count = 1
+        let current = this.head
+        let node = new Node(item)
+        while(current.next) {
+            if(n === count) {
+                node.next = current.next
+                current.next = node
+                console.log(JSON.stringify(this))
+                return true
+            }
+            current = current.next
+            ++count
+        }
+    }
+
+    remove (item) {
+        let current = this.head
+        while(current.next) {
+            let preview = current
+            current = current.next
+            console.log(item, current.data)
+            if(item === current.data) {
+                preview.next = current.next
+                console.log(JSON.stringify(this))
+                return true
+            }
+        }
+    }
+}
+
+
+const lst = new LinkedList()
+lst.append(1)
+lst.append(2)
+lst.append(3)
+lst.append(4)
+lst.appendAt(22, 2)
+lst.remove(22)
+
+
+const binarySearch = (arr, x) => {
+    const arrSort = arr.sort(( a, b ) => a - b)
+    const mid = Math.floor(arrSort.length/2)
+    console.log(arr)
+    if(arrSort[mid] === x) {
+        console.log(x, "Middle")
+        return x
+    } else if(arrSort[mid] < x && arrSort.length > 1) {
+        console.log("Greater condition", x)
+        return binarySearch(arrSort.slice(mid, arrSort.length), x)
+    } else if(arrSort[mid] > x && arrSort.length > 1) {
+        console.log("Less than", x)
+        return binarySearch(arrSort.slice(0, mid), x)
+    } else {
+        console.log("Not Here", x)
+        return -1
+    }
+}
+
+const arr = [
+    1,
+    2,
+    4,
+    6,
+    1,
+    100,
+    0,
+    10000,
+    3
+]
+console.log(binarySearch(arr, 6))
+
+class Tree {
+	constructor(value) {
+		this.value = value;
+		this.left = null;
+		this.right = null;
+	}
+
+	insert(value) {
+		if (value <= this.value) {
+			if (!this.left) {
+                this.left = new Tree(value);
+            } else {
+                console.log(this.left)
+                this.left.insert(value);
+            } 
+		} else {
+			if (!this.right) {
+                this.right = new Tree(value);
+            } else {
+                this.right.insert(value);
+            }
+        }
+        console.log(JSON.stringify(this))
+    }
+}
+
+const t = new Tree()
+t.insert(12)
+t.insert(6)
+t.insert(8)
+t.insert(3)
+
+
+
