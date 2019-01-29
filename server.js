@@ -704,6 +704,84 @@ function compareTime(value) {
 }
 // ----------------------------- Array Object Arrangment time property -------------------------------------------------
 
+// ------------------------- Containig exactly A and B letter not three consecative letter -----------------------------
+
+// Example A=5, B=3 . result should be :: aabaabab
+// Example A=3, B=3 . result should be :: ababab
+function solution(A, B) {
+    const arr = [];
+    function canPush(char) {
+      const { length } = arr;
+      return (arr[length - 1] !== char || arr[length - 2] !== char);
+    }
+    function push(char) {
+      arr.push(char);
+      if (char === 'A') A--;
+      else if (char === 'B') B--;
+    }
+    
+    while (A > 0 || B > 0) {
+      if (A > B) {
+        if (canPush('A')) push('A');
+        else if (B === 0) return console.log('Impossible');
+        else push('B');
+      } else if (B >= A) {
+        if (canPush('B')) push('B');
+        else if (A === 0) return console.log('Impossible');
+        else push('A');
+      }
+    }
+    console.log(arr.toString().replace(/,/g,""))
+    return arr.toString().replace(/,/g,"")
+  }
+  solution(3, 3);
+
+// ------------------------- Containig exactly A and B letter not three consecative letter -----------------------------
+
+// ----------------------- SMS Spilt program Note: not break word and have some limit for sentences send -----------------
+
+function splitIntoLines(S, K) {
+    let i;
+    let output = [];
+    let lineSoFar = "";
+    let temp;
+    const words = S.split(' ');
+    for (i = 0; i < words.length;) {
+        // check if adding this word would exceed the len
+        if (words[i].length > K) {
+            console.log("-1")
+            return -1
+        }
+        temp = addWordOntoLine(lineSoFar, words[i]);
+        if (temp.length > K) {
+            if (lineSoFar.length == 0) {
+                lineSoFar = temp     // force to put at least one word in each line
+                i++                  // skip past this word now
+            }
+            output.push(lineSoFar);   // put line into output
+            lineSoFar = ""            // init back to empty
+        } else {
+            lineSoFar = temp;         // take the new word
+            i++                       // skip past this word now
+        }
+    }
+    if (lineSoFar.length > 0) {
+        output.push(lineSoFar);
+    }
+    return output.length
+}
+
+function addWordOntoLine(line, word) {
+    if (line.length != 0) {
+        line += " "
+    }
+    return (line += word)
+}
+
+splitIntoLines("SMSmessagesarereally short", 12)
+
+// ----------------------- SMS Spilt program Note: not break word and have some limit for sentences send -----------------
+
 // ----------------------------- Server Listen and Configuration ---------------------------------------------------------
 
 http.listen(8080);
