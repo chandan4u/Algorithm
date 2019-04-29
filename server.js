@@ -1100,4 +1100,41 @@ t.insert(8)
 t.insert(3)
 
 
+// anagramsArray equation facebook
+
+function anagramsArray() {
+let arr = ["cab", "cz", "abc", "bca", "zc"];
+let result = []
+for(let i=0; i<arr.length; i++) {
+  let iSortedValue = sortString(arr[i])
+  let innerResult = []
+  innerResult.push(arr[i])
+  for(let j=i+1; j<arr.length; j++) {
+    let jSortedValue = sortString(arr[j])
+    if(iSortedValue.length == jSortedValue.length && jSortedValue == jSortedValue) {
+      innerResult.push(arr[j])
+      arr.splice(j,1)
+      j--
+    }
+  }
+  result.push(innerResult)
+}
+  return result
+}
+
+console.log(anagramsArray())
+
+function sortString(reqV) {
+  let reqValue = reqV.split("")
+  for(let i=0; i<reqValue.length; i++) {
+    for(let j=i; j<reqValue.length; j++) {
+      if(reqValue[i] > reqValue[j]) {
+        let temp = reqValue[i]
+        reqValue[i] = reqValue[j]
+        reqValue[j] = temp
+      }
+    }
+  }
+  return reqValue.join("")
+}
 
