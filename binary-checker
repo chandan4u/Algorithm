@@ -1,150 +1,106 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Expand / Collapse with Logs Table (Bootstrap 4.1.3)</title>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Black Star Rating from API</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8fafc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+    }
 
-    <!-- Bootstrap 4.1.3 CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    h2 {
+      margin-bottom: 10px;
+    }
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    .stars {
+      display: flex;
+      gap: 8px;
+      font-size: 45px;
+      color: #ccc; /* default color (gray when not filled) */
+    }
 
-    <style>
-      body {
-        background-color: #f7f9fb;
-      }
-      .container {
-        max-width: 900px;
-      }
-      .card {
-        border: 0;
-        border-radius: 12px;
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
-      }
-      .card-header {
-        background: linear-gradient(90deg, #ffffff, #f9fbfd);
-        border-radius: 12px 12px 0 0 !important;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 1rem 1.25rem;
-        cursor: pointer;
-      }
-      .card-header h5 {
-        margin: 0;
-        font-weight: 600;
-        font-size: 1.1rem;
-        color: #212529;
-      }
-      .arrow-icon {
-        transition: transform 0.3s ease;
-        color: #0d6efd;
-      }
-      .arrow-rotate {
-        transform: rotate(180deg);
-      }
-      .table {
-        border-radius: 10px;
-        overflow: hidden;
-      }
-      .badge {
-        font-size: 0.8rem;
-      }
-    </style>
-  </head>
+    .star.filled {
+      color: #000; /* black stars */
+    }
 
-  <body>
-    <div class="container py-5">
-      <h3 class="mb-4 text-center">
-        <i class="fa fa-chart-line text-primary mr-2"></i>
-        Expand / Collapse with Logs Table
-      </h3>
+    .rating-info {
+      margin-top: 10px;
+      font-size: 18px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
 
-      <div id="accordion">
-        <div class="card">
-          <div class="card-header" id="headingLogs" data-toggle="collapse" data-target="#collapseLogs" aria-expanded="false" aria-controls="collapseLogs">
-            <h5>
-              <i class="fa fa-list-check mr-2 text-primary"></i>
-              Deployment Logs
-            </h5>
-            <i class="fa fa-chevron-down arrow-icon"></i>
-          </div>
+  <h2>Product Rating</h2>
 
-          <div id="collapseLogs" class="collapse" aria-labelledby="headingLogs" data-parent="#accordion">
-            <div class="card-body">
-              <p class="mb-3 font-weight-semibold text-muted">Last 5 deployment activities:</p>
-              <div class="table-responsive">
-                <table class="table table-hover table-striped align-middle">
-                  <thead class="thead-light">
-                    <tr>
-                      <th>#</th>
-                      <th>Timestamp</th>
-                      <th>Service</th>
-                      <th>Status</th>
-                      <th>Message</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>2025-11-05 09:10:24</td>
-                      <td>auth-service</td>
-                      <td><span class="badge badge-success">Success</span></td>
-                      <td>Deployment completed successfully.</td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>2025-11-05 08:42:10</td>
-                      <td>payment-gateway</td>
-                      <td><span class="badge badge-danger">Failed</span></td>
-                      <td>Error: Missing configuration file.</td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td>2025-11-05 07:58:34</td>
-                      <td>notification-service</td>
-                      <td><span class="badge badge-warning text-dark">Partial</span></td>
-                      <td>Service deployed, but queue not connected.</td>
-                    </tr>
-                    <tr>
-                      <td>4</td>
-                      <td>2025-11-04 22:10:05</td>
-                      <td>api-gateway</td>
-                      <td><span class="badge badge-success">Success</span></td>
-                      <td>Version 2.4 deployed.</td>
-                    </tr>
-                    <tr>
-                      <td>5</td>
-                      <td>2025-11-04 19:24:55</td>
-                      <td>ui-frontend</td>
-                      <td><span class="badge badge-success">Success</span></td>
-                      <td>Hotfix pushed to production.</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+  <div class="stars" id="stars">
+    <span class="star">★</span>
+    <span class="star">★</span>
+    <span class="star">★</span>
+    <span class="star">★</span>
+    <span class="star">★</span>
+  </div>
 
-    <!-- Bootstrap 4.1.3 JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+  <div class="rating-info" id="rating-info">Loading rating...</div>
 
-    <script>
-      $(document).ready(function() {
-        $('#collapseLogs').on('show.bs.collapse', function() {
-          $('.arrow-icon').addClass('arrow-rotate');
-        });
-        $('#collapseLogs').on('hide.bs.collapse', function() {
-          $('.arrow-icon').removeClass('arrow-rotate');
-        });
+  <script>
+    const stars = document.querySelectorAll('.star');
+    const info = document.getElementById('rating-info');
+
+    // Simulated API response (replace with your real API call)
+    async function fetchRatingFromAPI() {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          resolve({ rating_percentage: 86 }); // example: 86%
+        }, 1000);
       });
-    </script>
-  </body>
+    }
+
+    async function loadRating() {
+      const response = await fetchRatingFromAPI();
+      const percentage = response.rating_percentage;
+      
+      // Convert percentage (0–100) → rating out of 5
+      const rating = (percentage / 100) * 5;
+      
+      const fullStars = Math.floor(rating);
+      const hasHalfStar = rating - fullStars >= 0.5;
+
+      // Reset all stars
+      stars.forEach(star => {
+        star.classList.remove('filled');
+        star.style.background = '';
+        star.style['-webkit-background-clip'] = '';
+        star.style['-webkit-text-fill-color'] = '';
+      });
+
+      // Fill full stars
+      for (let i = 0; i < fullStars; i++) {
+        stars[i].classList.add('filled');
+      }
+
+      // Half star logic
+      if (hasHalfStar && fullStars < 5) {
+        stars[fullStars].innerHTML = '★';
+        stars[fullStars].style.background = 'linear-gradient(90deg, #000 50%, #ccc 50%)';
+        stars[fullStars].style['-webkit-background-clip'] = 'text';
+        stars[fullStars].style['-webkit-text-fill-color'] = 'transparent';
+      }
+
+      // Display info
+      info.textContent = `Rating: ${rating.toFixed(1)} / 5 (${percentage}%)`;
+    }
+
+    loadRating();
+  </script>
+
+</body>
 </html>
